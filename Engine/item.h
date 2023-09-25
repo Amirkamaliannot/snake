@@ -17,6 +17,8 @@ public:
 
 	void random_move(std::mt19937& rng, snake& Snake);
 
+
+
 	void move(int _x, int _y);
 
 	int get_x() const;
