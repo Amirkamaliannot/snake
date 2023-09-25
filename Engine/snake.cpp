@@ -117,20 +117,6 @@ bool snake::touch_wall()
 }
 
 
-//bool snake::head_touch_item(item& itm)
-//{
-//	node last_node = get_node(get_size() - 1);
-//
-//	if ((last_node.x - node_size/2) < (itm.get_x() + itm.get_size() ) &&
-//		(last_node.x + node_size/2) > (itm.get_x() - itm.get_size() ) &&
-//		(last_node.y - node_size/2) < (itm.get_y() + itm.get_size() ) &&
-//		(last_node.y + node_size/2) > (itm.get_y() - itm.get_size() )) {
-//		return true;
-//	}
-//
-//	return false;
-//}
-
 bool snake::head_touch_item(int Item_x, int Item_y, int Item_size)
 {
 	node last_node = get_node(get_size() - 1);

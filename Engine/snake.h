@@ -24,8 +24,6 @@ public:
 	bool isCollition();
 	bool touch_wall();
 
-	//bool head_touch_item(item& itm);
-
 	bool head_touch_item(int Item_x, int Item_y, int Item_size);
 
 
