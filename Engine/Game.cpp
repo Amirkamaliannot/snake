@@ -50,7 +50,7 @@ void Game::UpdateModel()
 		game_over = true;
 	}
 
-
+	gfx.draw_circle( 500, 300, 100, 100,50,80, 0.1f, 0.9f);
 
 	if (!game_over) {
 
@@ -72,6 +72,7 @@ void Game::UpdateModel()
 
 
 }
+
 
 void Game::show_padding()
 {

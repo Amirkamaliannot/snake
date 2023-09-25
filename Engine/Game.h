@@ -41,6 +41,8 @@ private:
 	void ComposeFrame();
 	void UpdateModel();
 
+
+
 	void show_padding();
 	/********************************/
 	/*  User Functions              */

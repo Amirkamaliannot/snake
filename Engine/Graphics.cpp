@@ -339,6 +339,22 @@ void Graphics::draw_reqt(int x, int y, int width, int height, Color c)
 	}
 }
 
+void Graphics::draw_circle(int x, int y, int rate, Color c, float w_rate, float h_rate)
+{
+
+
+	for (int i = -rate; i < rate; i++) {
+		for (int j = -rate; j < rate; j++) {
+
+			if ( abs(  pow(i, 2)/ pow(w_rate, 2) + pow(j, 2)/pow(h_rate, 2)) < pow(rate, 2)  ) {
+
+				PutPixel(i + x, j + y, c);
+			}
+		}
+	}
+
+}
+
 void Graphics::draw_square(int x, int y, int size, Color body, Color padding)
 {
 	for (int i = -size/2; i <= size/2; i += 1) {

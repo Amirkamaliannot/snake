@@ -66,6 +66,12 @@ public:
 
 	void draw_reqt(int x, int y, int width, int height, Color c);
 
+	void draw_circle(int x, int y, int rate, Color c ,float w_rate = 1, float h_rate = 1);
+	void draw_circle(int x, int y, int rate,int r,int g, int b, float w_rate = 1, float h_rate = 1)
+	{
+		draw_circle(x, y, rate, { unsigned char(r),unsigned char(g),unsigned char(b) }, w_rate,h_rate);
+	}
+
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;
