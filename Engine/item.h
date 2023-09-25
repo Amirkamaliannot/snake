@@ -19,6 +19,11 @@ public:
 
 
 
+
+
+
+
+
 	void move(int _x, int _y);
 
 	int get_x() const;
