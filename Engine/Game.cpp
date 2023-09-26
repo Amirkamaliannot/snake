@@ -85,8 +85,11 @@ void Game::show_padding()
 
 void Game::ComposeFrame()
 {
-		Item.show_item(gfx);
-		snake_.draw(gfx);
+		
+	tc.reset_last();
+	Item.show_item(gfx);
+	snake_.draw(gfx);
+	float dt = tc.get_dt();
 }
 
 

@@ -54,6 +54,9 @@
     <ClInclude Include="item.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Timecounter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp">
@@ -81,6 +84,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="item.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Timecounter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

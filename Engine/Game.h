@@ -27,6 +27,7 @@
 #include "snake.h"
 #include <random>
 #include "item.h"
+#include "Timecounter.h"
 
 
 
@@ -60,6 +61,7 @@ private:
 	std::uniform_int_distribution<int> x_dist;
 	std::uniform_int_distribution<int> y_dist;
 
+	Timecounter tc;
 
 	item Item;
 	snake snake_;
