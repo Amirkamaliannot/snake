@@ -27,9 +27,9 @@ Game::Game(MainWindow& wnd)
 	wnd(wnd),
 	gfx(wnd),
 	rng(rd()),
-	x_dist(50, 750),
-	y_dist(50, 550),
-	snake_(Graphics::ScreenWidth / 2, Graphics::ScreenHeight / 2),
+	x_dist(50.0f, 750.0f),
+	y_dist(50.0f, 550.0f),
+	snake_( (float)(Graphics::ScreenWidth / 2), (float)(Graphics::ScreenHeight / 2) ),
 	Item(x_dist(rng), y_dist(rng))
 {
 
@@ -49,8 +49,6 @@ void Game::UpdateModel()
 	if (snake_.touch_wall() || snake_.isCollition()) {
 		game_over = true;
 	}
-
-	gfx.draw_circle( 500, 300, 100, 100,50,80, 0.1f, 0.9f);
 
 	if (!game_over) {
 
@@ -86,10 +84,14 @@ void Game::show_padding()
 void Game::ComposeFrame()
 {
 		
-	tc.reset_last();
 	Item.show_item(gfx);
 	snake_.draw(gfx);
 	float dt = tc.get_dt();
+
+	if (dt > 5) {
+		
+		tc.reset_last();
+	}
 }
 
 

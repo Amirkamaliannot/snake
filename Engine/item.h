@@ -7,7 +7,7 @@ class item
 {
 public:
 	
-	item(int _x, int _y);
+	item(float _x, float _y);
 
 	bool is_active();
 
@@ -26,16 +26,16 @@ public:
 
 	void move(int _x, int _y);
 
-	int get_x() const;
-	int get_y() const;
-	int get_size() const;
+	float get_x() const;
+	float get_y() const;
+	float get_size() const;
 
 
 private:
 
-	int x;
-	int y;
-	static constexpr int item_size= 10;
+	float x;
+	float y;
+	static constexpr float item_size= 10;
 
 	bool active = false;
 

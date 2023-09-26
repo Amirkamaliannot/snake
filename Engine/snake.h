@@ -7,15 +7,15 @@
 
 struct node
 {
-	int x;
-	int y;
+	float x;
+	float y;
 };
 
 class snake {
 
 public:
 
-	snake(int x, int y);
+	snake(float x, float y);
 
 	void grow();
 
@@ -24,17 +24,17 @@ public:
 	bool isCollition();
 	bool touch_wall();
 
-	bool head_touch_item(int Item_x, int Item_y, int Item_size);
+	bool head_touch_item(float Item_x, float Item_y, float Item_size);
 
 
 
 
-	bool body_touch_item(int Item_x, int Item_y, int Item_size);
+	bool body_touch_item(float Item_x, float Item_y, float Item_size);
 
 	void draw(Graphics& gfx);
 
 	int get_size() const;
-	int get_node_size() const;
+	float get_node_size() const;
 	node get_node(int index);
 	void add_node();
 	void increace_limit();
@@ -44,13 +44,13 @@ public:
 
 private:
 
-	int v_x;
-	int v_y;
+	float v_x;
+	float v_y;
 
-	int node_size = 10;
-	int speed_limit = 3;
+	float node_size = 10.0f;
+	float speed = 2.0f;
 
-	int grow_rate = 15;
+	int grow_rate = 5;
 
 	Color body_color = { 0,255,0 };
 	Color head_color = { 255,255,0 };
