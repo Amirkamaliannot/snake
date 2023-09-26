@@ -27,6 +27,7 @@
 #include "snake.h"
 #include <random>
 #include "item.h"
+#include "Timecounter.h"
 
 
 
@@ -57,9 +58,10 @@ private:
 
 	std::random_device rd;
 	std::mt19937 rng;
-	std::uniform_int_distribution<int> x_dist;
-	std::uniform_int_distribution<int> y_dist;
+	std::uniform_real_distribution<float> x_dist;
+	std::uniform_real_distribution<float> y_dist;
 
+	Timecounter tc;
 
 	item Item;
 	snake snake_;

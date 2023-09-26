@@ -5,12 +5,12 @@
 #include "Keyboard.h"
 #include <math.h>
 
-snake::snake(int x, int y)
+snake::snake(float x, float y)
 {
 
 	assert(snake_vector.size() == 0);
-	v_x = 0;
-	v_y = 0;
+	v_x = 0.0f;
+	v_y = 0.0f;
 	snake_vector.push_back({ x, y });
 }
 
@@ -22,7 +22,7 @@ void snake::grow()
 	}
 }
 
-void snake::move_forward(MainWindow& wnd)
+void snake::move_forward(MainWindow& wnd, float dt)
 {
 
 	if (wnd.kbd.KeyIsPressed('w')) {
@@ -30,7 +30,7 @@ void snake::move_forward(MainWindow& wnd)
 	}
 	else if (wnd.kbd.KeyIsPressed('s')) {
 
-		if (speed_limit > 0) {
+		if (speed> 0.0f) {
 			reduce_limit();
 
 		}
@@ -39,33 +39,33 @@ void snake::move_forward(MainWindow& wnd)
 
 	if (wnd.kbd.KeyIsPressed(VK_LEFT)) {
 		
-		if (v_x ==0) {
+		if (v_x ==0.0f) {
 
-			v_x = -speed_limit;
-			v_y = 0;
+			v_x = -speed*dt;
+			v_y = 0.0f;
 		}
 
 	}
 	if (wnd.kbd.KeyIsPressed(VK_RIGHT)) {
 
-		if (v_x == 0) {
-			v_x = speed_limit;
-			v_y = 0;
+		if (v_x == 0.0f) {
+			v_x = speed * dt;
+			v_y = 0.0f;
 		}
 	}
 	if (wnd.kbd.KeyIsPressed(VK_DOWN)) {
 
-		if (v_y == 0) {
-			v_x = 0;
-			v_y = speed_limit;
+		if (v_y == 0.0f) {
+			v_x = 0.0f;
+			v_y = speed * dt;
 		}
 	}
 	if (wnd.kbd.KeyIsPressed(VK_UP)) {
 
-		if (v_y == 0) {
+		if (v_y == 0.0f) {
 		
-			v_x = 0;
-			v_y = -speed_limit;
+			v_x = 0.0f;
+			v_y = -speed * dt;
 		}
 	}
 
@@ -88,7 +88,7 @@ bool snake::isCollition()
 
 	int close_nodes = 0;
 	for (int i = 0; i < get_size() - 1; i++) {
-		if (  sqrt(pow(last_node.x - snake_vector[i].x , 2) + pow(last_node.y - snake_vector[i].y, 2)) < speed_limit )
+		if (  sqrt(pow(last_node.x - snake_vector[i].x , 2) + pow(last_node.y - snake_vector[i].y, 2)) < speed)
 		{
 			close_nodes++;
 		}
@@ -117,27 +117,27 @@ bool snake::touch_wall()
 }
 
 
-bool snake::head_touch_item(int Item_x, int Item_y, int Item_size)
+bool snake::head_touch_item(float Item_x, float Item_y, float Item_size)
 {
 	node last_node = get_node(get_size() - 1);
 
-	if ((last_node.x - node_size/2) < (Item_x + Item_size ) &&
-		(last_node.x + node_size/2) > (Item_x - Item_size ) &&
-		(last_node.y - node_size/2) < (Item_y + Item_size ) &&
-		(last_node.y + node_size/2) > (Item_y - Item_size )) {
+	if ((last_node.x - node_size/2.0f) < (Item_x + Item_size ) &&
+		(last_node.x + node_size/2.0f) > (Item_x - Item_size ) &&
+		(last_node.y - node_size/2.0f) < (Item_y + Item_size ) &&
+		(last_node.y + node_size/2.0f) > (Item_y - Item_size )) {
 		return true;
 	}
 
 	return false;
 }
 
-bool snake::body_touch_item(int Item_x, int Item_y, int Item_size)
+bool snake::body_touch_item(float Item_x, float Item_y, float Item_size)
 {
 	for (int i = 0; i < get_size() - 1; i++) {
-		if ((snake_vector[i].x - node_size / 2) < (Item_x + Item_size) &&
-			(snake_vector[i].x + node_size / 2) > (Item_x - Item_size) &&
-			(snake_vector[i].y - node_size / 2) < (Item_y + Item_size) &&
-			(snake_vector[i].y + node_size / 2) > (Item_y - Item_size)) {
+		if ((snake_vector[i].x - node_size / 2.0f) < (Item_x + Item_size) &&
+			(snake_vector[i].x + node_size / 2.0f) > (Item_x - Item_size) &&
+			(snake_vector[i].y - node_size / 2.0f) < (Item_y + Item_size) &&
+			(snake_vector[i].y + node_size / 2.0f) > (Item_y - Item_size)) {
 			return true;
 		}
 	}
@@ -159,7 +159,7 @@ int snake::get_size() const
 	return snake_vector.size();
 }
 
-int snake::get_node_size() const
+float snake::get_node_size() const
 {
 	return node_size;
 }
@@ -172,15 +172,18 @@ node snake::get_node(int index)
 void snake::add_node()
 {
 	assert(snake_vector.size() != 0);
-	snake_vector.push_back({ snake_vector[snake_vector.size()-1].x+v_x , snake_vector[snake_vector.size()-1].y + v_y });
+	snake_vector.push_back({ 
+		snake_vector[snake_vector.size()-1].x + v_x  ,
+		snake_vector[snake_vector.size()-1].y + v_y 
+		});
 }
 
 void snake::increace_limit()
 {
-	speed_limit++;
+	speed++;
 }
 
 void snake::reduce_limit()
 {
-	speed_limit--;
+	speed--;
 }

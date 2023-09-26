@@ -27,9 +27,9 @@ Game::Game(MainWindow& wnd)
 	wnd(wnd),
 	gfx(wnd),
 	rng(rd()),
-	x_dist(50, 750),
-	y_dist(50, 550),
-	snake_(Graphics::ScreenWidth / 2, Graphics::ScreenHeight / 2),
+	x_dist(50.0f, 750.0f),
+	y_dist(50.0f, 550.0f),
+	snake_( (float)(Graphics::ScreenWidth / 2), (float)(Graphics::ScreenHeight / 2) ),
 	Item(x_dist(rng), y_dist(rng))
 {
 
@@ -46,11 +46,16 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+
+	float DT = tc.get_dt();
+	tc.reset_last();
+
+
 	if (snake_.touch_wall() || snake_.isCollition()) {
 		game_over = true;
 	}
 
-	gfx.draw_circle( 500, 300, 100, 100,50,80, 0.1f, 0.9f);
+	show_padding();
 
 	if (!game_over) {
 
@@ -63,30 +68,32 @@ void Game::UpdateModel()
 		}
 		else {
 
-			snake_.move_forward(wnd);
+			snake_.move_forward(wnd, DT*100.0f);
 		}
 
 	}
-
-
-
 
 }
 
 
 void Game::show_padding()
 {
-	gfx.draw_reqt(1, 1, 10, Graphics::ScreenHeight, { 255,5,255 });
-	gfx.draw_reqt(1, 1, Graphics::ScreenWidth, 10, { 255,5,255 });
+	gfx.draw_reqt(0, 0, 10, Graphics::ScreenHeight, { 255,5,255 });
+	gfx.draw_reqt(0, 0, Graphics::ScreenWidth, 10, { 255,5,255 });
 
-	gfx.draw_reqt(0, Graphics::ScreenHeight -11 , Graphics::ScreenWidth , 10, { 255,5,255 });
-	gfx.draw_reqt(Graphics::ScreenWidth-11, 0 , 10 , Graphics::ScreenHeight, { 255,5,255 });
+	gfx.draw_reqt(0, Graphics::ScreenHeight-10 , Graphics::ScreenWidth-10 , 10, { 255,5,255 });
+	gfx.draw_reqt(Graphics::ScreenWidth-10, 0, 10 , Graphics::ScreenHeight , { 255,5,255 });
 }
 
 void Game::ComposeFrame()
 {
-		Item.show_item(gfx);
-		snake_.draw(gfx);
+
+		
+	Item.show_item(gfx);
+	snake_.draw(gfx);
+
+	
+
 }
 
 

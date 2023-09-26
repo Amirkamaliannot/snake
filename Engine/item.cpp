@@ -1,7 +1,7 @@
 #include "item.h"
 #include "Graphics.h"
 
-item::item(int _x, int _y)
+item::item(float _x, float _y)
 {
 	x = _x;
 	y = _y;
@@ -30,8 +30,8 @@ void item::show_item(Graphics& gfx)
 
 
 void item::random_move(std::mt19937& rng, snake& Snake){
-	std::uniform_int_distribution <int> dist_x(50, 750);
-	std::uniform_int_distribution <int> dist_y(50, 550);
+	std::uniform_real_distribution<float> dist_x(50, 750);
+	std::uniform_real_distribution<float> dist_y(50, 550);
 	if (!active) {
 		do {
 			move(dist_x(rng), dist_y(rng));
@@ -46,16 +46,16 @@ void item::move(int _x, int _y)
 	y = _y;
 }
 
-int item::get_x() const
+float item::get_x() const
 {
 	return x;
 }
-int item::get_y() const
+float item::get_y() const
 {
 	return y;
 }
 
-int item::get_size() const
+float item::get_size() const
 {
 	return item_size;
 }
