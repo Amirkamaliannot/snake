@@ -46,6 +46,11 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+
+	float DT = tc.get_dt();
+	tc.reset_last();
+
+
 	if (snake_.touch_wall() || snake_.isCollition()) {
 		game_over = true;
 	}
@@ -63,10 +68,11 @@ void Game::UpdateModel()
 		}
 		else {
 
-			snake_.move_forward(wnd);
+			snake_.move_forward(wnd, DT*100.0f);
 		}
 
 	}
+
 }
 
 
@@ -81,11 +87,11 @@ void Game::show_padding()
 
 void Game::ComposeFrame()
 {
-	tc.reset_last();
+
 		
 	Item.show_item(gfx);
 	snake_.draw(gfx);
-	float dt = tc.get_dt();
+
 	
 
 }

@@ -19,7 +19,7 @@ public:
 
 	void grow();
 
-	void move_forward(MainWindow& wnd);
+	void move_forward(MainWindow& wnd, float dt);
 
 	bool isCollition();
 	bool touch_wall();

@@ -22,7 +22,7 @@ void snake::grow()
 	}
 }
 
-void snake::move_forward(MainWindow& wnd)
+void snake::move_forward(MainWindow& wnd, float dt)
 {
 
 	if (wnd.kbd.KeyIsPressed('w')) {
@@ -41,7 +41,7 @@ void snake::move_forward(MainWindow& wnd)
 		
 		if (v_x ==0.0f) {
 
-			v_x = -speed;
+			v_x = -speed*dt;
 			v_y = 0.0f;
 		}
 
@@ -49,7 +49,7 @@ void snake::move_forward(MainWindow& wnd)
 	if (wnd.kbd.KeyIsPressed(VK_RIGHT)) {
 
 		if (v_x == 0.0f) {
-			v_x = speed;
+			v_x = speed * dt;
 			v_y = 0.0f;
 		}
 	}
@@ -57,7 +57,7 @@ void snake::move_forward(MainWindow& wnd)
 
 		if (v_y == 0.0f) {
 			v_x = 0.0f;
-			v_y = speed;
+			v_y = speed * dt;
 		}
 	}
 	if (wnd.kbd.KeyIsPressed(VK_UP)) {
@@ -65,7 +65,7 @@ void snake::move_forward(MainWindow& wnd)
 		if (v_y == 0.0f) {
 		
 			v_x = 0.0f;
-			v_y = -speed;
+			v_y = -speed * dt;
 		}
 	}
 
@@ -172,7 +172,10 @@ node snake::get_node(int index)
 void snake::add_node()
 {
 	assert(snake_vector.size() != 0);
-	snake_vector.push_back({ snake_vector[snake_vector.size()-1].x+v_x , snake_vector[snake_vector.size()-1].y + v_y });
+	snake_vector.push_back({ 
+		snake_vector[snake_vector.size()-1].x + v_x  ,
+		snake_vector[snake_vector.size()-1].y + v_y 
+		});
 }
 
 void snake::increace_limit()
