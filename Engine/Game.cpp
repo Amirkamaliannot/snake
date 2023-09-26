@@ -50,6 +50,8 @@ void Game::UpdateModel()
 		game_over = true;
 	}
 
+	show_padding();
+
 	if (!game_over) {
 
 		Item.random_move(rng, snake_);
@@ -65,33 +67,27 @@ void Game::UpdateModel()
 		}
 
 	}
-
-
-
-
 }
 
 
 void Game::show_padding()
 {
-	gfx.draw_reqt(1, 1, 10, Graphics::ScreenHeight, { 255,5,255 });
-	gfx.draw_reqt(1, 1, Graphics::ScreenWidth, 10, { 255,5,255 });
+	gfx.draw_reqt(0, 0, 10, Graphics::ScreenHeight, { 255,5,255 });
+	gfx.draw_reqt(0, 0, Graphics::ScreenWidth, 10, { 255,5,255 });
 
-	gfx.draw_reqt(0, Graphics::ScreenHeight -11 , Graphics::ScreenWidth , 10, { 255,5,255 });
-	gfx.draw_reqt(Graphics::ScreenWidth-11, 0 , 10 , Graphics::ScreenHeight, { 255,5,255 });
+	gfx.draw_reqt(0, Graphics::ScreenHeight-10 , Graphics::ScreenWidth-10 , 10, { 255,5,255 });
+	gfx.draw_reqt(Graphics::ScreenWidth-10, 0, 10 , Graphics::ScreenHeight , { 255,5,255 });
 }
 
 void Game::ComposeFrame()
 {
+	tc.reset_last();
 		
 	Item.show_item(gfx);
 	snake_.draw(gfx);
 	float dt = tc.get_dt();
+	
 
-	if (dt > 5) {
-		
-		tc.reset_last();
-	}
 }
 
 
