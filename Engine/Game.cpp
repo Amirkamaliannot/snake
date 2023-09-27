@@ -88,7 +88,7 @@ void Game::show_padding()
 void Game::ComposeFrame()
 {
 
-		
+	
 	Item.show_item(gfx);
 	snake_.draw(gfx);
 
