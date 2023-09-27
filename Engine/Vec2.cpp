@@ -103,3 +103,15 @@ Vec2 Vec2::get_normalize()
 	}
 }
 
+
+float Vec2::distance_without_sqrt(Vec2& point)
+{
+	return pow(x - point.x, 2) + pow(y - point.y, 2);
+}
+
+float Vec2::distance(Vec2& point)
+{
+	return sqrt(distance_without_sqrt(point));
+}
+
+

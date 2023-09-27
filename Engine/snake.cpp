@@ -5,12 +5,13 @@
 #include "Keyboard.h"
 #include <math.h>
 
+
+
 snake::snake(float x, float y)
 {
 
 	assert(snake_vector.size() == 0);
-	v_x = 0.0f;
-	v_y = 0.0f;
+
 	snake_vector.push_back({ x, y });
 }
 
@@ -39,44 +40,41 @@ void snake::move_forward(MainWindow& wnd, float dt)
 
 	if (wnd.kbd.KeyIsPressed(VK_LEFT)) {
 		
-		if (v_x ==0.0f) {
+		if (V.X() == 0.0f) {
 
-			v_x = -speed*dt;
-			v_y = 0.0f;
+			V = Vec2(-speed , 0.0f) * dt;
 		}
 
 	}
 	if (wnd.kbd.KeyIsPressed(VK_RIGHT)) {
 
-		if (v_x == 0.0f) {
-			v_x = speed * dt;
-			v_y = 0.0f;
+		if (V.X() == 0.0f) {
+
+			V = Vec2(speed, 0.0f) * dt;
 		}
 	}
 	if (wnd.kbd.KeyIsPressed(VK_DOWN)) {
 
-		if (v_y == 0.0f) {
-			v_x = 0.0f;
-			v_y = speed * dt;
+		if (V.Y() == 0.0f) {
+
+			V = Vec2(0.0f, speed) * dt;
 		}
 	}
 	if (wnd.kbd.KeyIsPressed(VK_UP)) {
 
-		if (v_y == 0.0f) {
+		if (V.Y() == 0.0f) {
 		
-			v_x = 0.0f;
-			v_y = -speed * dt;
+			V = Vec2(0.0f, -speed) * dt;
 		}
 	}
 
-	if (v_x != 0 || v_y != 0) {
+	if (V.X() != 0.0f || V.Y() != 0.0f) {
 
 		for (int i = 0; i < snake_vector.size()-1; i++) {
 			snake_vector[i] = snake_vector[i+1];
 		}
 	}
-	snake_vector[snake_vector.size()-1].x += v_x;
-	snake_vector[snake_vector.size()-1].y += v_y;
+	snake_vector[snake_vector.size() - 1] += V;
 }
 
 
@@ -84,11 +82,11 @@ void snake::move_forward(MainWindow& wnd, float dt)
 bool snake::isCollition()
 {
 
-	node last_node = get_node(get_size() - 1);
+	Vec2 last_node = get_node(get_size() - 1);
 
 	int close_nodes = 0;
 	for (int i = 0; i < get_size() - 1; i++) {
-		if (  sqrt(pow(last_node.x - snake_vector[i].x , 2) + pow(last_node.y - snake_vector[i].y, 2)) < speed)
+		if (snake_vector[i].distance_without_sqrt(last_node) < speed * speed)
 		{
 			close_nodes++;
 		}
@@ -102,13 +100,13 @@ bool snake::isCollition()
 
 bool snake::touch_wall()
 {
-	node last_node = get_node(get_size()- 1); 
+	Vec2 last_node = get_node(get_size()- 1); 
 
 
-	if (last_node.x <= node_size + 0 ||
-		last_node.x >= (Graphics::ScreenWidth - node_size) ||
-		last_node.y <= node_size + 0 ||
-		last_node.y >= (Graphics::ScreenHeight - node_size) ) {
+	if (last_node.X() <= node_size + 0.0f ||
+		last_node.X() >= (Graphics::ScreenWidth - node_size) ||
+		last_node.Y() <= node_size + 0.0f ||
+		last_node.Y() >= (Graphics::ScreenHeight - node_size)) {
 
 		return true;
 	}
@@ -119,12 +117,12 @@ bool snake::touch_wall()
 
 bool snake::head_touch_item(float Item_x, float Item_y, float Item_size)
 {
-	node last_node = get_node(get_size() - 1);
+	Vec2 last_node = get_node(get_size() - 1);
 
-	if ((last_node.x - node_size/2.0f) < (Item_x + Item_size ) &&
-		(last_node.x + node_size/2.0f) > (Item_x - Item_size ) &&
-		(last_node.y - node_size/2.0f) < (Item_y + Item_size ) &&
-		(last_node.y + node_size/2.0f) > (Item_y - Item_size )) {
+	if ((last_node.X() - node_size/2.0f) < (Item_x + Item_size ) &&
+		(last_node.X() + node_size/2.0f) > (Item_x - Item_size ) &&
+		(last_node.Y() - node_size/2.0f) < (Item_y + Item_size ) &&
+		(last_node.Y() + node_size/2.0f) > (Item_y - Item_size )) {
 		return true;
 	}
 
@@ -134,10 +132,10 @@ bool snake::head_touch_item(float Item_x, float Item_y, float Item_size)
 bool snake::body_touch_item(float Item_x, float Item_y, float Item_size)
 {
 	for (int i = 0; i < get_size() - 1; i++) {
-		if ((snake_vector[i].x - node_size / 2.0f) < (Item_x + Item_size) &&
-			(snake_vector[i].x + node_size / 2.0f) > (Item_x - Item_size) &&
-			(snake_vector[i].y - node_size / 2.0f) < (Item_y + Item_size) &&
-			(snake_vector[i].y + node_size / 2.0f) > (Item_y - Item_size)) {
+		if ((snake_vector[i].X() - node_size / 2.0f) < (Item_x + Item_size) &&
+			(snake_vector[i].X() + node_size / 2.0f) > (Item_x - Item_size) &&
+			(snake_vector[i].Y() - node_size / 2.0f) < (Item_y + Item_size) &&
+			(snake_vector[i].Y() + node_size / 2.0f) > (Item_y - Item_size)) {
 			return true;
 		}
 	}
@@ -148,10 +146,10 @@ bool snake::body_touch_item(float Item_x, float Item_y, float Item_size)
 void snake::draw(Graphics& gfx)
 {
 	for (int i = 0; i < snake_vector.size() -1; i++) {
-			gfx.draw_square(snake_vector[i].x, snake_vector[i].y, node_size, body_color, padding);
+			gfx.draw_square(snake_vector[i].X(), snake_vector[i].Y(), node_size, body_color, padding);
 	}
 	
-	gfx.draw_square(snake_vector[snake_vector.size()-1].x, snake_vector[snake_vector.size()-1].y, node_size, head_color, padding);
+	gfx.draw_square(snake_vector[snake_vector.size()-1].X(), snake_vector[snake_vector.size() - 1].Y(), node_size, head_color, padding);
 }
 
 int snake::get_size() const
@@ -164,7 +162,7 @@ float snake::get_node_size() const
 	return node_size;
 }
 
-node snake::get_node(int index)
+Vec2 snake::get_node(int index)
 {
 	return snake_vector[index];
 }
@@ -172,10 +170,7 @@ node snake::get_node(int index)
 void snake::add_node()
 {
 	assert(snake_vector.size() != 0);
-	snake_vector.push_back({ 
-		snake_vector[snake_vector.size()-1].x + v_x  ,
-		snake_vector[snake_vector.size()-1].y + v_y 
-		});
+	snake_vector.push_back({ snake_vector[snake_vector.size() - 1] + V });	
 }
 
 void snake::increace_limit()

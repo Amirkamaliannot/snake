@@ -32,6 +32,11 @@ public:
 	Vec2 get_normalize();
 
 
+	float distance_without_sqrt(Vec2& point);
+
+	float distance(Vec2& point);
+
+
 private:
 	float x;
 	float y;

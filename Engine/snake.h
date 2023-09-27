@@ -3,13 +3,8 @@
 #include "MainWindow.h"
 #include "Graphics.h"
 #include "Colors.h"
+#include "Vec2.h"
 
-
-struct node
-{
-	float x;
-	float y;
-};
 
 class snake {
 
@@ -35,17 +30,17 @@ public:
 
 	int get_size() const;
 	float get_node_size() const;
-	node get_node(int index);
+	Vec2 get_node(int index);
 	void add_node();
 	void increace_limit();
 	void reduce_limit();
 
 
 
+
 private:
 
-	float v_x;
-	float v_y;
+	Vec2 V = {0, 0};
 
 	float node_size = 10.0f;
 	float speed = 2.0f;
@@ -57,6 +52,6 @@ private:
 	Color padding = { 255,255, 128};
 
 
-	std::vector <node> snake_vector;
+	std::vector <Vec2> snake_vector;
 
 };
